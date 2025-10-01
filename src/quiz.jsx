@@ -138,10 +138,25 @@ const archetypes = [
   },
 ];
 
+
 export default function Quiz() {
   const [currentQ, setCurrentQ] = useState(0);
   const [score, setScore] = useState(0);
   const [showResult, setShowResult] = useState(false);
+  const [presaveClicked, setPresaveClicked] = useState(false);
+  const [confirmedPresave, setConfirmedPresave] = useState(false);
+
+  const handlePresaveClick = () => {
+    window.open(
+      "https://venice.lnk.to/snapchatmindgames?fbclid=PAdGRleANJpPxleHRuA2FlbQIxMQABp-pYyijp80k5eYL3nF9e7DhXIYanL5VuXD2lRcQhyk1ccVqQUd3mId_c_o0I_aem_LpF9nEI5naHEByS-e3Rolg",
+      "_blank"
+    );
+    setPresaveClicked(true);
+  };
+
+  const handleConfirmPresave = () => {
+    setConfirmedPresave(true);
+  };
 
   const handleOptionClick = (points) => {
     setScore(score + points);
@@ -154,9 +169,10 @@ export default function Quiz() {
 
   const getArchetype = () => {
     return (
-      archetypes.find(
-        (a) => score >= a.range[0] && score <= a.range[1]
-      ) || { title: "Unknown", description: "Something went wrong." }
+      archetypes.find((a) => score >= a.range[0] && score <= a.range[1]) || {
+        title: "Unknown",
+        description: "Something went wrong.",
+      }
     );
   };
 
@@ -164,27 +180,79 @@ export default function Quiz() {
     setCurrentQ(0);
     setScore(0);
     setShowResult(false);
+    setPresaveClicked(false);
+    setConfirmedPresave(false);
   };
 
-  if (showResult) {
+  // Step 1: Quiz done, presave NOT clicked yet
+  if (showResult && !presaveClicked) {
+    return (
+      <div
+        style={{
+          padding: 20,
+          maxWidth: 600,
+          margin: "auto",
+          textAlign: "center",
+        }}
+      >
+        <h2>Presave 'SNAPCHATMINDGAMES' to reveal your Snapchat Mind Games Archetype...</h2>
+        <p>Just come back to this window to see your results</p>
+
+        <button onClick={handlePresaveClick} style={{ margin: "10px" }}>
+          Presave Now
+        </button>
+      </div>
+    );
+  }
+
+  // Step 2: Presave clicked, waiting for confirmation
+  if (showResult && presaveClicked && !confirmedPresave) {
+    return (
+      <div
+        style={{
+          padding: 20,
+          maxWidth: 600,
+          margin: "auto",
+          textAlign: "center",
+        }}
+      >
+        <h2>Thanks for presaving!</h2>
+        <button onClick={handleConfirmPresave} style={{ margin: "10px" }}>
+          I Presaved! Show me my results
+        </button>
+      </div>
+    );
+  }
+
+  // Step 3: Show final quiz result after confirmation
+  if (showResult && confirmedPresave) {
     const archetype = getArchetype();
     return (
-      <div style={{ padding: 20, maxWidth: 600, margin: "auto", textAlign: "center" }}>
+      <div
+        style={{
+          padding: 20,
+          maxWidth: 600,
+          margin: "auto",
+          textAlign: "center",
+        }}
+      >
         <h2>Your Snapchat Mind Games Archetype</h2>
         <h3>{archetype.title}</h3>
         <p>{archetype.description}</p>
-        <p>Share your results and tag me on ig @aspenjade.vox</p>
+        <p>Share your results and tag me on IG @aspenjade.vox</p>
         <button onClick={resetQuiz}>Try Again</button>
       </div>
     );
   }
 
+  // Quiz questions UI
   const question = questions[currentQ];
-
   return (
     <div style={{ padding: 20, maxWidth: 600, margin: "auto" }}>
       <h2>Snapchat Mind Games Quiz</h2>
-      <p>Question {currentQ + 1} of {questions.length}</p>
+      <p>
+        Question {currentQ + 1} of {questions.length}
+      </p>
       <h3>{question.question}</h3>
       <div>
         {question.options.map((opt, idx) => (
@@ -197,7 +265,6 @@ export default function Quiz() {
           </button>
         ))}
       </div>
-      {/* <p>Current score: <strong>{score}</strong></p> */}
     </div>
   );
 }
