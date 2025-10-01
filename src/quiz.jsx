@@ -196,7 +196,7 @@ export default function Quiz() {
         }}
       >
         <h2>Presave 'SNAPCHATMINDGAMES' to reveal your Snapchat Mind Games Archetype...</h2>
-        <p>Just come back to this window to see your results</p>
+        <p>Just come back to this screen to see your results - on ig you have to hit the BACK arrow.  On browser you have to go back to this window</p>
 
         <button onClick={handlePresaveClick} style={{ margin: "10px" }}>
           Presave Now
