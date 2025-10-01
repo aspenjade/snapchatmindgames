@@ -173,7 +173,7 @@ export default function Quiz() {
         <h2>Your Snapchat Mind Games Archetype</h2>
         <h3>{archetype.title}</h3>
         <p>{archetype.description}</p>
-        <p>Your final score: <strong>{score}</strong></p>
+        <p>Share your results and tag me on ig @aspenjade.vox</p>
         <button onClick={resetQuiz}>Try Again</button>
       </div>
     );
