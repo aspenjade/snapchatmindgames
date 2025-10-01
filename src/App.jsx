@@ -25,7 +25,7 @@ function App() {
         {/* <h1>
         You ready to play <span className="snap">SNAPCHATMINDGAMES</span>?
       </h1> */}
-        <button
+        {/* <button
           onClick={() => setShowWelcome(false)}
           style={{
             marginTop: '2rem',
@@ -40,7 +40,7 @@ function App() {
           }}
         >
           Play Story Mode
-        </button>
+        </button> */}
       <button
         onClick={() => {
           setShowWelcome(false);
